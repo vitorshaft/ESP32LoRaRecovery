@@ -1,0 +1,30 @@
+name: PlatformIO CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    
+    - name: Install PlatformIO
+      run: pip install platformio
+    
+    - name: Run Unit Tests
+      run: |
+        pio test -e unit_test
+    
+    - name: Build ESP32 Firmware
+      run: |
+        pio run -e esp32dev  # Substitua pelo seu ambiente
